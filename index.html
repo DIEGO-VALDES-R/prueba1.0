@@ -9,7 +9,7 @@
       font-family: "Century Gothic", sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #ffffff, #dddddd);
+      background: linear-gradient(to bottom, #f7f7f7, #dddddd);
       color: #150016;
     }
 
@@ -27,6 +27,11 @@
       background-color: #ffffff;
       border: 1px solid #dddddd;
       border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .tab:hover {
+      background-color: #f0f0f0;
     }
 
     .content {
@@ -35,26 +40,39 @@
       border: 1px solid #dddddd;
       border-radius: 10px;
       margin: 10px;
-      color: #333; /* Cambiado el color del texto para mejorar la legibilidad */
+      color: #333;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     button {
-      background-color: #ffffff;
-      color: #000000;
+      background-color: #5e5e5e;
+      color: #ffffff;
       padding: 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #eeeeee;
+      background-color: #404040;
     }
 
     .club-img {
       width: 100%;
-      max-width: 300px;
-      margin-top: 10px;
+      max-width: 500px; /* Ajustado el tamaño máximo */
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+
+    a {
+      color: #800080;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #4b004b;
     }
   </style>
 </head>
@@ -71,7 +89,7 @@
 
   <div id="content1" class="content">
     <h1>Q12 CLUB DE NEGOCIOS</h1>
-    <img src="photo.jpg" alt="Q12 Logo">
+    <img src="q12.jpg" alt="Q12 Logo" class="club-img">
   </div>
 
   <div id="content2" class="content">
@@ -121,8 +139,6 @@
     <img class="club-img " src="IMG-20231125-WA0004.jpg" alt="Libro">
   </div>
 
-  </div>
-
   <script>
     function showContent(contentId) {
       const contents = document.querySelectorAll('.content');
@@ -149,11 +165,4 @@
       // ...
 
       // Ejemplo de cómo agregar datos a la lista en la cuarta hoja
-      const listaDatos = document.getElementById("listaDatos");
-      const nuevoElemento = document.createElement("li");
-      nuevoElemento.textContent = "Fecha: 2024-01-12, Peso: 70 kg, IMC: 25.5";
-      listaDatos.appendChild(nuevoElemento);
-    }  </script>
-  <p style="text-align: center; margin-top: 20px;">Aplicación desarrollada por Diego Fernando Valdes - Versión 1.0</p>
-</body>
-</html>
+      const listaDatos =
