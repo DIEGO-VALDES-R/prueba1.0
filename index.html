@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q12 CLUB DE NEGOCIOS</title>
+  <style>
+    body {
+      font-family: "Century Gothic", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffffff, #dddddd);
+      color: #150016;
+    }
+
+    .tabs-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 50px;
+      background: linear-gradient(to right, #d1a8e0, #a26ccc);
+    }
+
+    .tab {
+      padding: 10px;
+      cursor: pointer;
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+    }
+
+    .content {
+      padding: 20px;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 10px;
+      margin: 10px;
+      color: #333; /* Cambiado el color del texto para mejorar la legibilidad */
+    }
+
+    button {
+      background-color: #ffffff;
+      color: #000000;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #eeeeee;
+    }
+
+    .club-img {
+      width: 100%;
+      max-width: 300px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tab" onclick="showContent('content1')">Inicio</div>
+    <div class="tab" onclick="showContent('content2')">Descripción</div>
+    <div class="tab" onclick="showContent('content3')">Consulta IMC</div>
+    <div class="tab" onclick="showContent('content4')">Mis Datos</div>
+    <div class="tab" onclick="showContent('content5')">Club de Lectura</div>
+    <div class="tab" onclick="showContent('content6')">Seminarios</div>
+    <div class="tab" onclick="showContent('content7')">Ejercicios</div>
+  </div>
+
+  <div id="content1" class="content">
+    <h1>Q12 CLUB DE NEGOCIOS</h1>
+    <img src="imagenes/photo.jpg" alt="Q12 Logo">
+  </div>
+
+  <div id="content2" class="content">
+    <h1>Q12 CLUB DE NEGOCIOS</h1>
+    <p>Somos personas apasionadas por el Emprendimiento y la Libre empresa. Construyamos sueños juntos porque Juntos Somos Imparables</p>
+  </div>
+
+  <div id="content3" class="content">
+    <h1>TU ÍNDICE DE MASA CORPORAL</h1>
+    <label for="fecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha">
+    <label for="nombres">Nombres y Apellidos:</label>
+    <input type="text" id="nombres" name="nombres">
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad">
+    <label for="peso">Peso:</label>
+    <input type="number" id="peso" name="peso">
+    <label for="altura">Altura:</label>
+    <input type="number" id="altura" name="altura">
+    <button onclick="calcularIMC()">Consultar</button>
+    <div id="resultado"></div>
+    <button onclick="guardarDatos()">Guardar</button>
+  </div>
+
+  <div id="content4" class="content">
+    <h1>MIS DATOS</h1>
+    <img class="club-img" src="imagenes/CUADRO-IMC.JPG" alt="Libro">
+    <ul id="listaDatos"></ul>
+  </div>
+
+  <div id="content5" class="content">
+    <h1>CLUB DE LECTURA</h1>
+    <p>PADRE RICO PADRE POBRE</p>
+    <img class="club-img" src="imagenes/IMG-20240112-WA0003.jpg" alt="Libro">
+    <p><a href="https://us05web.zoom.us/j/86563632850?pwd=Tkw3aVV3TzdUNXBhTE1ta3JsS0NnUT09" target="_blank">Enlace a la videoconferencia</a></p>
+  </div>
+
+  <div id="content6" class="content">
+    <h1>SEMINARIOS</h1>
+    <p>SEMINARIO DE NEGOCION FEBRERO</p>
+    <img class="club-img" src="imagenes/IMG-20240113-WA0005.jpg" alt="Libro">
+  </div>
+
+  <div id="content7" class="content">
+    <h1>EJERCICIOS</h1>
+    <p>SEMINARIO DE NEGOCION FEBRERO</p>
+    <img class="club-img " src="imagenes/IMG-20231125-WA0004.jpg" alt="Libro">
+  </div>
+
+  </div>
+
+  <script>
+    function showContent(contentId) {
+      const contents = document.querySelectorAll('.content');
+      contents.forEach(content => {
+        content.style.display = 'none';
+      });
+
+      document.getElementById(contentId).style.display = 'block';
+    }
+
+    let datosGuardados = [];
+
+    function calcularIMC() {
+      // Código para calcular el IMC y mostrar el resultado
+      // ...
+
+      // Ejemplo de cómo mostrar el resultado
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.innerHTML = "IMC: 25.5 (Normal)";
+    }
+
+    function guardarDatos() {
+      // Código para guardar los datos y mostrar en la cuarta hoja
+      // ...
+
+      // Ejemplo de cómo agregar datos a la lista en la cuarta hoja
+      const listaDatos = document.getElementById("listaDatos");
+      const nuevoElemento = document.createElement("li");
+      nuevoElemento.textContent = "Fecha: 2024-01-12, Peso: 70 kg, IMC: 25.5";
+      listaDatos.appendChild(nuevoElemento);
+    }  </script>
+  <p style="text-align: center; margin-top: 20px;">Aplicación desarrollada por Diego Fernando Valdes - Versión 1.0</p>
+</body>
+</html>
