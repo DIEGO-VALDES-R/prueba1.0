@@ -9,7 +9,7 @@
       font-family: "Century Gothic", sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #ffffff, #dddddd);
+      background: linear-gradient(to bottom, #f7f7f7, #e0e0e0);
       color: #150016;
     }
 
@@ -27,6 +27,8 @@
       background-color: #ffffff;
       border: 1px solid #dddddd;
       border-radius: 5px;
+      color: #150016;
+      font-weight: bold;
     }
 
     .content {
@@ -35,43 +37,70 @@
       border: 1px solid #dddddd;
       border-radius: 10px;
       margin: 10px;
-      color: #333; /* Cambiado el color del texto para mejorar la legibilidad */
+      color: #333;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     button {
-      background-color: #ffffff;
-      color: #000000;
+      background-color: #6c757d;
+      color: #ffffff;
       padding: 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #eeeeee;
+      background-color: #495057;
     }
 
     .club-img {
       width: 100%;
       max-width: 300px;
       margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 998;
     }
   </style>
 </head>
 <body>
   <div class="tabs-container">
-    <div class="tab" onclick="showContent('content1')">Inicio</div>
-    <div class="tab" onclick="showContent('content2')">Descripción</div>
-    <div class="tab" onclick="showContent('content3')">Consulta IMC</div>
-    <div class="tab" onclick="showContent('content4')">Mis Datos</div>
-    <div class="tab" onclick="showContent('content5')">Club de Lectura</div>
-    <div class="tab" onclick="showContent('content6')">Seminarios</div>
-    <div class="tab" onclick="showContent('content7')">Ejercicios</div>
+    <button class="tab" onclick="showContent('content1')">Inicio</button>
+    <button class="tab" onclick="showContent('content2')">Descripción</button>
+    <button class="tab" onclick="showContent('content3')">Consulta IMC</button>
+    <button class="tab" onclick="showContent('content4')">Mis Datos</button>
+    <button class="tab" onclick="showContent('content5')">Club de Lectura</button>
+    <button class="tab" onclick="showContent('content6')">Seminarios</button>
+    <button class="tab" onclick="showContent('content7')">Ejercicios</button>
   </div>
 
   <div id="content1" class="content">
     <h1>Q12 CLUB DE NEGOCIOS</h1>
-    <img src="q12.jpg" alt="Q12 Logo">
+    <img src="q12.jpg" alt="Q12 Logo" class="club-img">
   </div>
 
   <div id="content2" class="content">
@@ -94,6 +123,12 @@
     <button onclick="calcularIMC()">Consultar</button>
     <div id="resultado"></div>
     <button onclick="guardarDatos()">Guardar</button>
+
+    <div id="resultado-popup" class="popup">
+      <p id="resultado-text"></p>
+      <button onclick="cerrarPopup()">Cerrar</button>
+    </div>
+    <div class="overlay" onclick="cerrarPopup()"></div>
   </div>
 
   <div id="content4" class="content">
@@ -117,12 +152,11 @@
 
   <div id="content7" class="content">
     <h1>EJERCICIOS</h1>
-    <p>SEMINARIO DE NEGOCION FEBRERO</p>
+    <p>EJERCITATE PARA LA VIDA</p>
     <img class="club-img" src="IMG-20231125-WA0004.jpg" alt="Libro">
-  </div>
+    <p><a href="https://www.youtube.com/watch?v=g0z0rqoSmxY" target="_blank">Enlace a la videoconferencia</a></p>
 
-  </div>
-
+</div>
   <script>
     function showContent(contentId) {
       const contents = document.querySelectorAll('.content');
@@ -136,24 +170,99 @@
     let datosGuardados = [];
 
     function calcularIMC() {
-      // Código para calcular el IMC y mostrar el resultado
-      // ...
+      const fecha = document.getElementById("fecha").value;
+      const nombres = document.getElementById("nombres").value;
+      const edad = document.getElementById("edad").value;
+      const peso = document.getElementById("peso").value;
+      const altura = document.getElementById("altura").value;
 
-      // Ejemplo de cómo mostrar el resultado
-      const resultadoDiv = document.getElementById("resultado");
-      resultadoDiv.innerHTML = "IMC: 25.5 (Normal)";
+      // Validar que los campos no estén vacíos
+      if (fecha === '' || nombres === '' || edad === '' || peso === '' || altura === '') {
+        alert('Por favor, complete todos los campos.');
+        return;
+      }
+
+      // Cálculo del IMC
+      const alturaMetros = altura / 100;
+      const imc = peso / (alturaMetros * alturaMetros);
+      const resultado = `IMC: ${imc.toFixed(1)} (${interpretarIMC(imc)})`;
+
+      // Mostrar resultado en un popup
+      mostrarPopup(resultado);
+    }
+
+    function interpretarIMC(imc) {
+      // Función para interpretar el IMC y devolver una categoría
+      // Puedes personalizar las categorías según tus necesidades
+      if (imc < 18.5) {
+        return 'Bajo peso';
+      } else if (imc >= 18.5 && imc < 24.9) {
+        return 'Normal';
+      } else if (imc >= 25 && imc < 29.9) {
+        return 'Sobrepeso';
+      } else {
+        return 'Obesidad';
+      }
+    }
+
+    function mostrarPopup(resultado) {
+      const popup = document.getElementById("resultado-popup");
+      const overlay = document.querySelector(".overlay");
+      const resultadoText = document.getElementById("resultado-text");
+
+      resultadoText.textContent = resultado;
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    function cerrarPopup() {
+      const popup = document.getElementById("resultado-popup");
+      const overlay = document.querySelector(".overlay");
+
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
     }
 
     function guardarDatos() {
-      // Código para guardar los datos y mostrar en la cuarta hoja
-      // ...
+      const fecha = document.getElementById("fecha").value;
+      const peso = document.getElementById("peso").value;
+      const imc = calcularIMCReal(); // Calcular el IMC real aquí
 
-      // Ejemplo de cómo agregar datos a la lista en la cuarta hoja
+      // Validar que los campos no estén vacíos
+      if (fecha === '' || peso === '') {
+        alert('Por favor, complete la fecha y el peso antes de guardar.');
+        return;
+      }
+
+      // Guardar los datos
+      const nuevoDato = `Fecha: ${fecha}, Peso: ${peso} kg, IMC: ${imc.toFixed(1)}`;
+      datosGuardados.push(nuevoDato);
+
+      // Mostrar mensaje de "Guardado Exitosamente"
+      alert('Guardado Exitosamente');
+
+      // Actualizar la lista en la cuarta hoja
+      actualizarListaDatos();
+    }
+
+    function calcularIMCReal() {
+      const peso = document.getElementById("peso").value;
+      const altura = document.getElementById("altura").value;
+      const alturaMetros = altura / 100;
+      return peso / (alturaMetros * alturaMetros);
+    }
+
+    function actualizarListaDatos() {
       const listaDatos = document.getElementById("listaDatos");
-      const nuevoElemento = document.createElement("li");
-      nuevoElemento.textContent = "Fecha: 2024-01-12, Peso: 70 kg, IMC: 25.5";
-      listaDatos.appendChild(nuevoElemento);
-    }  </script>
+      listaDatos.innerHTML = '';
+      
+      datosGuardados.forEach(dato => {
+        const nuevoElemento = document.createElement("li");
+        nuevoElemento.textContent = dato;
+        listaDatos.appendChild(nuevoElemento);
+      });
+    }
+  </script>
   <p style="text-align: center; margin-top: 20px;">Aplicación desarrollada por Diego Fernando Valdes - Versión 1.0</p>
 </body>
 </html>
